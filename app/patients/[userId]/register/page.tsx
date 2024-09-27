@@ -3,12 +3,8 @@ import Link from "next/link";
 import React from "react";
 import RegisterForm from "@/components/forms/RegisterForm";
 import { getUser } from "@/lib/actions/patient.actions";
-
 const Register = async ({
-  params: { userId },
-}: {
-  params: { userId: string };
-}) => {
+  params: { userId } }: SearchParamProps) => {
   const user = await getUser(userId);
 
   return (

@@ -43,7 +43,7 @@ const RegisterForm = ({ user }: { user: User }) => {
   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     setIsLoading(true);
 
-    let formData = undefined;
+    let formData;
 
     if (
       values.identificationDocument &&
@@ -53,17 +53,21 @@ const RegisterForm = ({ user }: { user: User }) => {
         type: values.identificationDocument[0].type,
       });
 
-      formData = {
-        blobFile,
-        filename: values.identificationDocument[0].name,
-      };
+      // formData = {
+      //   blobFile,
+      //   filename: values.identificationDocument[0].name,
+      // };
+
+        formData = new FormData();
+        formData.append("blobFile", blobFile);
+        formData.append("filename", values.identificationDocument[0].name);
     }
 
     try {
       const patientData = {
         ...values,
         userId: user.$id,
-        birthdate: new Date(values.birthDate),
+        birthDate: new Date(values.birthDate),
         identificationDocument: formData,
       };
       console.log("Patient data to be registered:", patientData);
